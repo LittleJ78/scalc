@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+<div th:replace="header :: content"></div>
+<hr/>
+
+<p align="center">
+    <span th:text = "${'Calculator: ' + project.getName()}">project name</span>
+</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+    <tr>
+        <td>
+            <fieldset style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+                <legend >Enter Expression</legend>
+                <form th:method="POST" th:object="${expressionUnit}">
+                    <span th:if="${#fields.hasErrors('defaultExpression')}" th:errors="*{defaultExpression}" style="color: red;"></span>
+                    <input type="text" th:id="txtExpr" th:field="*{defaultExpression}" th:name="defaultExpression" th:value="*{defaultExpression}" style="width:500px"/>
+                    <hr/>
+                    <select th:name="typeOfOperand">
+                        <option th:each="type:*{TypesOfOperands}" th:value="${type}" th:text="${type}" th:selected="${type} == *{typeOfOperand}"/>
+                    </select>
+                    <input type="submit" value="Calculate"/>
+                </form>
+                <hr/>
+                <table th:if = "${expressionUnit.getDefaultExpression() != ''}">
+                    <tr>
+                        <td style="width:400px">
+                            <form th:object="${expressionUnit}">
+                                 <span th:text="${expressionUnit.getUnitExpression()}"></span>
+                            </form>
+                        </td>
+                        <td style="width:50px" align="right">
+                            <form  th:method="PATCH">
+                                <input type="submit" value="Add to List"/>
+                            </form>
+                        </td>
+                        <td style="width:50px" align="right">
+                            <form th:action="@{/expressions}">
+                                <input type="submit" value="New"/>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </td>
+    </tr>
+</table>
+
+<form>
+<table align="center" border="0"  style="width:556px; table-layout:fixed; padding:2px; border-spacing:2px">
+    <tbody>
+    <tr>
+        <td style="max-width:300px; table-layout:fixed;">
+            <fieldset th:each="singleExpression:${expressionList}" style="background:#eeeeee; border:1px solid #cccccc; padding:7px 10px;">
+                <legend th:text="${singleExpression.getExpressionUnitName()}" style="font-weight: bold;">List</legend>
+                <a th:href="@{/expressions/{id} (id=${singleExpression.getExpressionUnitId()})}" style="text-decoration:none; color: blue;">
+                    <span  th:text="${singleExpression.getUnitExpression()}" style="display:block; width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">value</span>
+                </a>
+            </fieldset>
+        </td>
+        <td th:if = "${expressionUnit.getDefaultExpression() != ''}" style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:210px">
+            <ul th:each="atomic:${expressionUnit.getAtomicExpressions()}">
+                <li th:text="${atomic}">value</li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</form>
+    <table align="center" border="0"  style="width:556px; table-layout:fixed; padding:2px; border-spacing:2px">
+        <tr>
+            <td style="width:350px">
+            </td>
+            <td align="right" style="width:90px">
+                <form th:action="@{/project}">
+                    <input type="submit" value="To Project List"/>
+                </form>
+            </td>
+            <td align="right" style="width:60px">
+                <form th:action="@{/project/{projectId} (projectId = ${project.getProjectId()})}">
+                  <input type="submit" value="Go Back"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,98 @@
+html {
+    --conteiner: 400px;
+    --padding-container: 35px;
+    box-sizing: border-box;
+/*    position: relative;
+    overflow-x: hidden; */
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+   /* min-width: 1000px;*/
+}
+
+
+body {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #D0D0D0;
+    background-image: url("../img/img_bgd.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: top right;
+}
+
+input[type="text"], textarea[type="text"], select[type="text"] {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+input, textarea,select {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    resize: none;
+}
+input:focus, textarea:focus, select:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bdbdbd;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+}
+
+button {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 24px;
+    margin: 0 15px 15px 0;
+    outline: none;
+    border: none;
+    height: 38px;
+    line-height: 37px;
+    font-weight: normal;
+    text-decoration: none;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    transition: box-shadow .18s ease-out,background .18s ease-out,color .18s ease-out;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
+}
+button:focus-visible {
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+    color: brown;
+}
+button:hover {
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+    color: brown;
+}
+button:active {
+    color: brown;
+}
+button:disabled {
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+    pointer-events: none;
+}
+
+
+
+

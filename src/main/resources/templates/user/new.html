@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http: //www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>New user S-Calc</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" th:href="@{/css/new_user.css}">
+</head>
+<body>
+<header class="header">
+    <div class="container header_container">
+        <img class="header_logo" src="/img/sprite.svg#logo" alt="logo" />
+    </div>
+    <div class="header_menu_container">
+        <ul class="header_menu_text">
+            <li class="header_menu_last_item">
+                <a th:href="@{/}">Back</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<form th:method = "POST" th:action="@{/user}" th:object="${user}">
+    <div class="registration_box">
+        <div class="registration_box_header">
+            <p class="registration_box_header_text">Registration</p>
+        </div>
+        <label for="userName">Name</label>
+        <input th:type="text" th:field="*{userName}" id="userName" placeholder="Enter You Name"/>
+        <label for="email">E-mail</label>
+        <input th:type="text" th:field="*{email}" id="email" placeholder="Enter You Email"/>
+        <label for="password">Password</label>
+        <input th:type="password" th:field="*{password}" id="password" placeholder="Enter You Password"/>
+        <label for="confirmPassword">Confirm Password</label>
+        <input th:type="password" th:field="*{confirmPassword}" id="confirmPassword" placeholder="Confirm You Password"/>
+        <button>ok</button>
+    </div>
+    <div class="registration_errors_box">
+        <div class="registration_error_box" th:if="${#fields.hasErrors('userName')}" >
+            <p class="registration_error_text" th:errors="*{userName}">Wrong user name</p>
+        </div>
+        <div class="registration_error_box" th:if="${#fields.hasErrors('email')}" >
+            <p class="registration_error_text" th:errors="*{email}">Wrong e-mail address</p>
+        </div>
+        <div class="registration_error_box" th:if="${#fields.hasErrors('password')}" >
+            <p class="registration_error_text" th:errors="*{password}">Password not equals</p>
+        </div>
+        <div class="registration_error_box" th:if="${#fields.hasErrors('global')}" >
+            <p class="registration_error_text" th:text="${user.validatePassword()}">Password not equals</p>
+        </div>
+
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,89 @@
+@import "normalize.css";
+@import "fonts.css";
+@import "default.css";
+@import "header.css";
+
+.registration_box {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 500px;
+    background-color: #86B69F;
+    border-radius: 10px;
+    margin: 55px 55px;
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+}
+
+.registration_box_header {
+    background-color: #6F9784;
+    width: 350px;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+}
+.registration_box_header_text {
+    margin-top: 15px;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 32px;
+    text-align: center;
+    vertical-align: center;
+
+}
+
+input {
+    margin-left: 45px;
+    width: 250px;
+    height: 35px;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+
+label {
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 18px;
+    padding-top: 30px;
+    margin-left: 45px;
+}
+
+button {
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    margin-top: 35px;
+    margin-left: 125px;
+    width: 100px;
+    height: 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #D9D9D9;
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+.registration_errors_box {
+    float: left;
+    margin: 145px 30px;
+    width: 350px;
+    height: 500px;
+}
+
+.registration_error_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 300px;
+    margin: 30px 30px;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    color: brown;
+    background-color: #86B69F;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+}
+
+.registration_error_text {
+    text-align: center;
+}

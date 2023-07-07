@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http: //www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects S-Calc</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" th:href="@{css/index_projects.css}">
+</head>
+<body>
+<header class="header">
+    <div class="container header_container">
+        <img class="header_logo" src="/img/sprite.svg#logo" alt="logo" />
+    </div>
+    <div class="header_menu_container">
+        <ul class="header_menu_text">
+            <li class="header_menu_last_item">
+                <a th:href="@{/logout}">Exit</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<div class="registration_box">
+    <div class="registration_box_header">
+        <div class="registration_box_header_img">
+            <img src="/img/ava.svg" alt="ava">
+        </div>
+        <div class="registration_box_header_text">
+            <p th:text="${user.getUserName()}">User Name</p>
+        </div>
+    </div>
+    <div class="projects-labile">
+        <p>Projects:</p>
+    </div>
+    <div th:each="project:${projectList}">
+        <a th:href="@{/project/{id} (id=${project.getProjectId()})}">
+           <p class="project_name" th:text="${project.getName()}">Project Name</p>
+        </a>
+    </div>
+    <form th:action="@{project/new}">
+        <button >new project</button>
+    </form>
+</div>
+</body>
+</html>

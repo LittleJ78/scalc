@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http: //www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Project</title>
+</head>
+<body>
+<div th:replace="header :: content"></div>
+<hr/>
+
+<p align="center">Calculator</p>
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+  <tr th:object="${project}">
+    <td>
+      <form th:method="PATCH" >
+        <fieldset style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+          <legend>New Project</legend>
+          <br/>
+          <label for="name">Name:</label>
+          <input type="text" th:field="*{name}" th:value="*{name}" id="name" style="width:500px"/>
+          <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+          <br/><br/>
+          <label for="description">Description:</label>
+          <textarea th:field="*{description}" th:value="*{description}" id="description" rows="7" style="width:500px"></textarea>
+          <hr/>
+          <table>
+            <tr>
+              <td style="width:450px">
+              </td>
+              <td style="width:50px" align="right">
+                <input type="submit" value="Update" style="width:100px"/>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <fieldset style="background:#eeeeee; border:0px solid #cccccc; padding:5px 10px; width:506px">
+        <form th:action="@{/project}">
+          <input type="submit" value="Cancel" style="width:506px"/>
+        </form>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

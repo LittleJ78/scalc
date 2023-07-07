@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http: //www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Project</title>
+</head>
+<body>
+<div th:replace="header :: content"></div>
+<hr/>
+
+<p align="center">Calculator</p>
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+  <tr th:object="${project}">
+    <td>
+        <fieldset style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+          <legend th:text="*{'Project: '+name}"></legend>
+          <br/>
+            <fieldset style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px;">
+                <legend>Description:</legend>
+                <span th:text="*{description}" id="description"  style="width:500px"></span>
+            </fieldset>
+          <hr/>
+          <table>
+            <tr>
+              <td style="width:450px">
+              </td>
+              <td style="width:50px" align="right">
+                <form th:action="@{/expressions}" >
+                  <input type="submit" value="Expressions" style="width:100px"/>
+                </form>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <fieldset style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px; width:500px">
+          <table>
+              <tr>
+                  <td>
+                     <form th:action="@{/project}">
+                       <input type="submit" value="Project List" />
+                     </form>
+                  </td>
+                  <td>
+                     <form th:action="@{/project/{projectId}/update (projectId = ${project.getProjectId()})}">
+                         <input type="submit" value="Edit Description" />
+                     </form>
+                  </td>
+                  <td>
+                    <form th:method="DELETE">
+                      <input type="submit" value="Delete Project" />
+                     </form>
+                  </td>
+              </tr>
+          </table>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

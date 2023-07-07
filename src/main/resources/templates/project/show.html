@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http: //www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Project S-Calc</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" th:href="@{/css/show_projects.css}">
+</head>
+<body>
+<header class="header">
+    <div class="container header_container">
+        <img class="header_logo" src="/img/sprite.svg#logo" alt="logo" />
+    </div>
+    <div class="header_menu_container">
+        <ul class="header_menu_text">
+            <li class="header_menu_last_item">
+                <a th:href="@{/logout}">Exit</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<div class="shadow">
+    <div class="registration_box">
+        <div class="registration_box_header">
+            <div class="registration_box_header_img">
+                <img src="/img/ava.svg" alt="ava">
+            </div>
+            <div class="registration_box_header_text">
+                <p th:text="${user.getUserName()}">User Name</p>
+            </div>
+        </div>
+        <div class="projects-labile">
+            <p>Projects:</p>
+        </div>
+        <div th:each="project:${projectList}">
+            <p class="project_name" th:text="${project.getName()}">Project Name</p>
+        </div>
+        <button id="newProject" disabled>new project</button>
+    </div>
+</div>
+<div class="project" th:object="${project}">
+    <div class="project_header">
+        <p class="project_header_name" th:text="*{name}">Project Name</p>
+        <div class="project_header_menu">
+            <a id="delete" th:href="@{/project}">
+                Delete
+            </a >
+            <a id="edit" th:href="@{/project/{projectId}/update (projectId = ${project.getProjectId()})}">
+                Edit
+            </a >
+            <a id="back" th:href="@{/project}">
+                Back
+            </a>
+        </div>
+    </div>
+    <div class="project_blocks">
+        <p>Description</p>
+        <div>
+            <p id="description" th:text="*{description}">Description</p>
+        </div>
+    </div>
+    <div class="project_blocks">
+        <p>Watch list</p>
+        <div class="watch_list">
+            <div  th:each="expression:${watchList}">
+                <div class="watch_list_text" th:text="${expression.getExpressionUnitName() + ' = ' + expression.getExpressionResult}"> < Empty > </div>
+            </div>
+        </div>
+    </div>
+    <form th:action="@{/expressions}">
+        <button id="go">go</button>
+    </form>
+</div>
+</body>
+</html>

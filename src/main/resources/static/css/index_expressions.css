@@ -1,0 +1,212 @@
+@import "normalize.css";
+@import "fonts.css";
+@import "default.css";
+@import "header.css";
+
+.registration_box {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    background-color: #86B69F;
+    border-radius: 10px;
+    margin: 55px 55px;
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+}
+
+.registration_box_header {
+    display: flex;
+    background-color: #6F9784;
+    width: 350px;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+}
+.registration_box_header_img {
+    margin: 12px 19px;
+}
+.registration_box_header_text p {
+    margin-top: 15px;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 32px;
+}
+.projects-labile, .watch_list_labile{
+    margin-top: 33px;
+    margin-left: 35px;
+    margin-bottom: 0;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 18px;
+}
+.project_name {
+    margin-top: 12px;
+    text-align: center;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 22px;
+}
+.watch_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 210px;
+    margin: 12px 35px 35px;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.watch_list_text {
+    margin-bottom: 5px;
+}
+
+.expression {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    margin: 55px 55px;
+
+}
+
+.expression_main_block {
+    width: 732px;
+    height: 204px;
+    background-color: #86B69F;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+}
+
+.expression_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #6F9784;
+    width: 732px;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.expression_header_name {
+    margin-top: 15px;
+    margin-left: 35px;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 32px;
+}
+
+.expression_header_menu {
+    margin-right: 35px;
+    margin-top: 20px;
+}
+
+input {
+    width: 662px;
+    margin: 24px 35px;
+}
+
+.expression_action {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+label {
+    margin-left: 35px;
+}
+select {
+    margin-left: 25px;
+    width: 160px;
+    cursor: pointer;
+}
+.expression_result_button_box {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+.expression_action>button {
+    margin-left: 188px;
+    width: 250px;
+}
+
+.expression_result_block {
+    display: flex;
+    justify-content: space-between;
+    width: 732px;
+    height: 88px;
+    background-color: #86B69F;
+    border-radius: 10px;
+    margin-top: 14px;
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+}
+.expression_result_text {
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 18px;
+    margin: 12px 35px;
+}
+.expression_result {
+    margin-left: 64px;
+    overflow-x: auto;
+}
+.expression_result_button {
+    margin-top: 25px;
+    margin-right: 36px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.expression_footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.atomic_expressions {
+    height: min-content;
+    margin-top: 14px;
+    margin-left: 14px;
+    background-color: #86B69F;
+    border-radius: 10px;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-right: 35px;
+}
+li {
+    width: max-content;
+    margin-bottom: 10px;
+
+}
+
+.expression_in_list {
+    width: 100%;
+    height: 66px;
+    background-color: #6F9784;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+}
+.expressions_list {
+    margin-top: 14px;
+    width: 100%;
+}
+.expression_name {
+    padding-top: 12px;
+    margin-left: 35px;
+    font-family: Courier Prime, monospace;
+    font-style: italic;
+    font-size: 18px;
+}
+
+.expression_in_project {
+    margin-top: 6px;
+    margin-left: 64px;
+}
+
+

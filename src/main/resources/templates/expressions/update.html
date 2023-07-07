@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Project S-Calc</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" th:href="@{/css/update_expressions.css}">
+</head>
+<body>
+<header class="header">
+  <div class="container header_container">
+    <img class="header_logo" src="/img/sprite.svg#logo" alt="logo" />
+  </div>
+  <div class="header_menu_container">
+    <ul class="header_menu_text">
+      <li class="header_menu_last_item">
+        <a th:href="@{/logout}">Exit</a>
+      </li>
+    </ul>
+  </div>
+</header>
+<div class="shadow">
+  <div class="registration_box">
+    <div class="registration_box_header">
+      <div class="registration_box_header_img">
+        <img src="/img/ava.svg" alt="ava">
+      </div>
+      <div class="registration_box_header_text">
+        <p th:text="${user.getUserName()}">User Name</p>
+      </div>
+    </div>
+    <div class="projects-labile">
+      Project:
+    </div>
+    <div class="project_name" th:text = "${project.getName()}">
+      Project Name
+    </div>
+    <div class="watch_list_labile">
+      Watch list:
+    </div>
+    <div class="watch_list">
+      <div  th:each="expression:${watchList}">
+        <div class="watch_list_text" th:text="${expression.getExpressionUnitName() + ' = ' + expression.getExpressionResult}"> < Empty > </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="expression">
+  <form th:method="POST" th:object="${expressionUnit}">
+    <div class="expression_main_block">
+      <div class="expression_header">
+        <p class="expression_header_name">Edit Expression </p>
+        <div class="expression_header_menu">
+          <a id="delete" href="#">
+            Delete
+          </a>
+          <a id="close" th:href="@{/expressions}">
+            Back
+          </a>
+        </div>
+      </div>
+      <div class="name_and_watch_block">
+        <div class="name_input">
+          <label for="name">Name</label>
+          <input id="name" th:type="text" th:field="*{expressionUnitName}" th:name="expressionUnitName" th:value="*{expressionUnitName}"/>
+        </div>
+        <div class="watch_block">
+          <label for="watch_checbox">Add to watch list</label>
+          <input id="watch_checbox" type="checkbox" th:field="*{watchList}"/>
+        </div>
+      </div>
+      <div class="expression_input">
+        <label for="expression">Expression</label>
+        <input id="expression" th:type="text" th:field="*{defaultExpression}" th:name="defaultExpression" th:value="*{defaultExpression}"/>
+      </div>
+      <div class="expression_action">
+        <label for="type">Type</label>
+        <select id="type" th:name="typeOfOperand">
+          <option th:each="type:*{TypesOfOperands}" th:value="${type}" th:text="${type}" th:selected="${type} == *{typeOfOperand}">default</option>
+        </select>
+        <button>Update</button>
+      </div>
+    </div>
+  </form>
+  <div class="expression_result_block" th:if = "${expressionUnit.getDefaultExpression() != ''}">
+    <div>
+      <div class="expression_result_text" th:text="${expressionUnit.getExpressionUnitName() + ':'}">
+        Name_of_Expression:
+      </div>
+      <div class="expression_result" th:object="${expressionUnit}"  th:text="${expressionUnit.getUnitExpression()}">
+        5 + sin 90 - 5 ^ 2 * - 1 = 31
+      </div>
+    </div>
+    <div class="expression_result_button_box">
+      <form th:if = "${expressionUnit.getDefaultExpression() != ''}" th:method="PATCH">
+        <button class="expression_result_button">Save</button>
+      </form>
+    </div>
+  </div>
+  <div class="expression_footer">
+    <div>
+
+    </div>
+    <div class="atomic_expressions" th:if = "${expressionUnit.getDefaultExpression() != ''}">
+      <ul th:each="atomic:${expressionUnit.getAtomicExpressions()}">
+        <li th:text="${atomic}">value</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>

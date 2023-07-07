@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 1280px;
+    height: 59px;
+    background-color: #86B69F;
+
+}
+
+.header_logo {
+    width: 116px;
+    height: 37px;
+    margin: 11px 35px;
+}
+
+.header_menu_container {
+    margin: 5px 0;
+}
+
+.header_menu_text>li {
+    display: inline-block;
+}
+
+.header_menu_last_item {
+    margin: 0 35px;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+a:hover {
+    color: brown;
+}
+
+/*.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
+} */
