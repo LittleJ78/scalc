@@ -1,8 +1,6 @@
 package local.myproject.scalc.services;
 
-import local.myproject.scalc.entitys.ExpressionUnit;
-import local.myproject.scalc.entitys.Project;
-import local.myproject.scalc.repositories.ProjectRepository;
+import local.myproject.scalc.domain.Project;
 
 import java.util.List;
 

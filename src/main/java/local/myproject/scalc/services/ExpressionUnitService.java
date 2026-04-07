@@ -1,7 +1,6 @@
 package local.myproject.scalc.services;
 
-import local.myproject.scalc.entitys.ExpressionUnit;
-import org.springframework.data.repository.query.Param;
+import local.myproject.scalc.domain.ExpressionUnit;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package local.myproject.scalc.services;
 
-import local.myproject.scalc.entitys.ExpressionUnit;
-import local.myproject.scalc.entitys.ParametersForExpressions;
-import local.myproject.scalc.entitys.ParametrisedExpressions;
-import local.myproject.scalc.repositories.ExpressionUnitRepository;
-import local.myproject.scalc.repositories.ParametrisedExpressionsRepository;
+import local.myproject.scalc.domain.ExpressionUnit;
+import local.myproject.scalc.domain.ParametersForExpressions;
+import local.myproject.scalc.domain.ParametrisedExpressions;
+import local.myproject.scalc.persistent.dao.ExpressionUnitDao;
+import local.myproject.scalc.persistent.dao.ParametrisedExpressionDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,32 +19,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExpressionUnitServiceImpl implements ExpressionUnitService{
 
-    private final ExpressionUnitRepository expressionUnitRepository;
-    private final ParametrisedExpressionsRepository parametrisedExpressionsRepository;
+    private final ExpressionUnitDao expressionUnitDao;
+    private final ParametrisedExpressionDao parametrisedExpressionDao;
     public static String[][] arrayOfParameters = {};
     private static Character counter = 'A';
 
     @Override
     public ExpressionUnit findById(int expressionUnitId) {
-        return expressionUnitRepository.findById(expressionUnitId).get();
+        return expressionUnitDao.findById(expressionUnitId).orElseThrow();
     }
 
     @Override
     public List<ExpressionUnit> findAllByProjectId(int projectId) {
         this.createArrayOfParameters(projectId);
-        return expressionUnitRepository.findAllByProjectId(projectId);
+        return expressionUnitDao.findAllByProjectId(projectId);
     }
 
     @Override
     public List<ExpressionUnit> createWatchList(int projectId) {
-        return expressionUnitRepository.findAllByProjectId(projectId).stream().filter(x -> x.isWatchList()).toList();
+        return expressionUnitDao.findAllByProjectId(projectId).stream().filter(x -> x.isWatchList()).toList();
     }
 
     @Override
     public void save(ExpressionUnit expressionUnit) {
         if(checkDoubleExpression(expressionUnit)) {
             expressionUnit.setExpressionUnitName(this.setDefaultName(expressionUnit.getProject().getProjectId()));
-            expressionUnitRepository.save(expressionUnit);
+            ExpressionUnit savedExpressionUnit = expressionUnitDao.save(expressionUnit);
+            expressionUnit.setExpressionUnitId(savedExpressionUnit.getExpressionUnitId());
             this.createArrayOfParameters(expressionUnit.getProject().getProjectId());
             this.findAndSaveOrUpdateParameters(expressionUnit);
         }
@@ -52,15 +53,15 @@ public class ExpressionUnitServiceImpl implements ExpressionUnitService{
 
     @Override
     public void update(ExpressionUnit expressionUnit) {
-            expressionUnitRepository.save(expressionUnit);
+            expressionUnitDao.update(expressionUnit);
             this.findAndSaveOrUpdateParameters(expressionUnit);
     }
 
 
     @Override
     public void deleteById(int expressionUnitId) {
-        int projectId = expressionUnitRepository.findById(expressionUnitId).get().getProject().getProjectId();
-        expressionUnitRepository.deleteById(expressionUnitId);
+        int projectId = expressionUnitDao.findById(expressionUnitId).orElseThrow().getProject().getProjectId();
+        expressionUnitDao.deleteById(expressionUnitId);
         this.createArrayOfParameters(projectId);
     }
 
@@ -71,7 +72,7 @@ public class ExpressionUnitServiceImpl implements ExpressionUnitService{
      * статический массив класса arrayOfParameters
      */
     private void createArrayOfParameters(int projectId) {
-        List<ExpressionUnit> listOfExpressionUnit = expressionUnitRepository.findAllByProjectId(projectId);
+        List<ExpressionUnit> listOfExpressionUnit = expressionUnitDao.findAllByProjectId(projectId);
         String[][] parameter = new String[listOfExpressionUnit.size()][2];
         for(int i = 0; i < listOfExpressionUnit.size(); i++) {
             parameter[i][0] = listOfExpressionUnit.get(i).getExpressionUnitName();
@@ -86,7 +87,7 @@ public class ExpressionUnitServiceImpl implements ExpressionUnitService{
      */
     private String setDefaultName(int projectId) {
         counter = 'A';
-        while (expressionUnitRepository.findAllNameByProjectId(projectId).stream().filter(x -> x.equals(counter + "_Value") || x.equals(String.valueOf(counter))).count() != 0){
+        while (expressionUnitDao.findAllNameByProjectId(projectId).stream().filter(x -> x.equals(counter + "_Value") || x.equals(String.valueOf(counter))).count() != 0){
             counter++;
         }
         return String.valueOf(counter);
@@ -97,7 +98,7 @@ public class ExpressionUnitServiceImpl implements ExpressionUnitService{
      * @return правда если совпадений нет
      */
     private Boolean checkDoubleExpression(ExpressionUnit expressionUnit) {
-        List<ExpressionUnit> listExpressions = expressionUnitRepository.findAll();
+        List<ExpressionUnit> listExpressions = expressionUnitDao.findAll();
         return listExpressions.stream().filter(x -> x.getDefaultExpression().equals(expressionUnit.getDefaultExpression())).count() == 0;
     }
 
@@ -108,10 +109,10 @@ public class ExpressionUnitServiceImpl implements ExpressionUnitService{
     private void findAndSaveOrUpdateParameters(ExpressionUnit expressionUnit){
         int projectId = expressionUnit.getProject().getProjectId();
         List<String> units = Arrays.stream(expressionUnit.getDefaultExpression().split(" ")).toList();
-        ParametrisedExpressions parametrisedExpressions = parametrisedExpressionsRepository.FindByExpressionUnitId(expressionUnit.getExpressionUnitId()).stream().findFirst().orElse(new ParametrisedExpressions());
+        ParametrisedExpressions parametrisedExpressions = parametrisedExpressionDao.findByExpressionUnitId(expressionUnit.getExpressionUnitId()).orElse(new ParametrisedExpressions());
         parametrisedExpressions.clearParameter();
         parametrisedExpressions.setExpressionUnit(expressionUnit);
-        List<String> namesOfExpressionsInProject = expressionUnitRepository.findAllNameByProjectId(projectId);
+        List<String> namesOfExpressionsInProject = expressionUnitDao.findAllNameByProjectId(projectId);
         for(String s : units) {
             if (!namesOfExpressionsInProject.stream().filter(x -> x.equals(s)).findFirst().orElse("").equals("")) {
                 ParametersForExpressions parametersForExpressions = new ParametersForExpressions();
@@ -121,9 +122,13 @@ public class ExpressionUnitServiceImpl implements ExpressionUnitService{
             }
         }
         if (!parametrisedExpressions.getParametersForExpressions().isEmpty()) {
-            parametrisedExpressionsRepository.save(parametrisedExpressions);
+            if (parametrisedExpressions.getParametrisedExpressionId() == 0) {
+                parametrisedExpressionDao.save(parametrisedExpressions);
+            } else {
+                parametrisedExpressionDao.update(parametrisedExpressions);
+            }
         } else if (parametrisedExpressions.getParametrisedExpressionId() != 0) {
-            parametrisedExpressionsRepository.delete(parametrisedExpressions);
+            parametrisedExpressionDao.deleteById(parametrisedExpressions.getParametrisedExpressionId());
         }
     }
 }

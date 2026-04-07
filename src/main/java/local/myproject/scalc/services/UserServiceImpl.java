@@ -1,9 +1,9 @@
 package local.myproject.scalc.services;
 
 
-import local.myproject.scalc.entitys.Role;
-import local.myproject.scalc.entitys.User;
-import local.myproject.scalc.repositories.UserRepository;
+import local.myproject.scalc.domain.Role;
+import local.myproject.scalc.domain.User;
+import local.myproject.scalc.persistent.dao.UserDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,12 +18,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService{
-    private final UserRepository userRepository;
+    private final UserDao userDao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User findByUserName(String userName) {
-        return userRepository.findByUserName(userName).get();
+        return userDao.findByUserName(userName).orElseThrow();
     }
 
     @Override
@@ -32,20 +32,20 @@ public class UserServiceImpl implements UserService{
         Set<Role> roles = new HashSet<>();
         roles.add(Role.USER);
         user.setRoles(roles);
-        userRepository.save(user);
+        userDao.save(user);
     }
 
     @Override
     public void deleteById(long id) {
-        userRepository.deleteById(id);
+        userDao.deleteById(id);
     }
 
     @Override
     public void updateUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        User oldUser = userRepository.findById(user.getUserId()).get();
+        User oldUser = userDao.findById(user.getUserId()).orElseThrow();
         user.setRoles(oldUser.getRoles());
         user.setProjects(oldUser.getProjects());
-        userRepository.save(user);
+        userDao.update(user);
     }
 }

@@ -1,7 +1,7 @@
 package local.myproject.scalc.services;
 
-import local.myproject.scalc.entitys.Project;
-import local.myproject.scalc.repositories.ProjectRepository;
+import local.myproject.scalc.domain.Project;
+import local.myproject.scalc.persistent.dao.ProjectDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,30 +13,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService{
 
-    public final ProjectRepository projectRepository;
+    public final ProjectDao projectDao;
 
     @Override
     public List<Project> findAllByUser(Long userId) {
-        return (List<Project>) projectRepository.findAllByUserId(userId);
+        return projectDao.findAllByUserId(userId);
     }
 
     @Override
     public Project findById(int projectId) {
-        return projectRepository.findById(projectId).get();
+        return projectDao.findById(projectId).orElseThrow();
     }
 
     @Override
     public void save(Project project) {
-        projectRepository.save(project);
+        projectDao.save(project);
     }
 
     @Override
     public void update(Project project) {
-        projectRepository.save(project);
+        projectDao.update(project);
     }
 
     @Override
     public void deleteById(int projectId) {
-        projectRepository.deleteById(projectId);
+        projectDao.deleteById(projectId);
     }
 }

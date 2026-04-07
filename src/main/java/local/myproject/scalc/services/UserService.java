@@ -1,7 +1,6 @@
 package local.myproject.scalc.services;
 
-import local.myproject.scalc.entitys.User;
-import local.myproject.scalc.repositories.UserRepository;
+import local.myproject.scalc.domain.User;
 
 public interface UserService {
     User findByUserName(String userName);
