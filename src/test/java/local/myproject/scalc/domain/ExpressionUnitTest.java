@@ -1,7 +1,7 @@
 package local.myproject.scalc.domain;
 
-import local.myproject.scalc.domain.ExpressionUnit;
-import local.myproject.scalc.domain.Project;
+import local.myproject.scalc.domain.aggregate.expression.ExpressionUnit;
+import local.myproject.scalc.domain.aggregate.project.Project;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
